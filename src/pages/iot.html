@@ -1,0 +1,36 @@
+<!-- title: IoT Monitoring &middot; FARMVERSE AI | desc: LoRa field sensor monitoring for soil moisture, soil temperature, air temperature and humidity, with an honest demo mode. | page: iot | layout: app | icon: radio | scripts: assets/vendor/chart.umd.min.js,assets/js/iot.js -->
+<section class="band"><div class="band-grid"><div><p class="eyebrow">LoRa &middot; MQTT &middot; FastAPI</p><h1 data-i18n="title.iot"></h1><p data-i18n="sub.iot"></p></div>
+  <div class="btn-row" style="justify-content:flex-end"><div class="seg" role="group" aria-label="Data source"><button type="button" data-src="live" aria-pressed="false">Live gateway</button><button type="button" data-src="demo" aria-pressed="false">Demo mode</button></div></div></div></section>
+
+<div id="io-banner"></div>
+
+<div class="grid g4" id="io-kpis"></div>
+
+<div class="grid g2" style="margin-top:16px">
+  <article class="card span-2"><header><h3><i data-icon="droplets"></i>Soil moisture by depth</h3><span id="io-tag1"></span></header><div class="chart"><canvas id="c-sm" role="img" aria-label="Soil moisture readings"></canvas></div><p class="chart-src">Volumetric soil moisture (%) from capacitive probes at the stated depth. Not comparable with SMAP satellite values (top 5 cm averaged over 9 km).</p></article>
+  <article class="card"><header><h3><i data-icon="thermometer"></i>Soil and air temperature</h3><span id="io-tag2"></span></header><div class="chart"><canvas id="c-tp" role="img" aria-label="Temperature readings"></canvas></div></article>
+  <article class="card"><header><h3><i data-icon="cloud-sun"></i>Relative humidity</h3><span id="io-tag3"></span></header><div class="chart"><canvas id="c-rh" role="img" aria-label="Humidity readings"></canvas></div></article>
+</div>
+
+<div class="grid g2" style="margin-top:16px">
+  <article class="card"><header><h3><i data-icon="radio"></i>Sensor nodes and device health</h3></header><div class="table-wrap"><table><thead><tr><th>Node</th><th>Depth</th><th>Last reading</th><th class="n">Battery</th><th class="n">RSSI</th><th>Status</th></tr></thead><tbody id="io-nodes"></tbody></table></div></article>
+  <article class="card"><header><h3><i data-icon="bell"></i>Threshold alerts</h3></header>
+    <div class="form-grid"><div class="field"><label for="io-smin">Alert when soil moisture falls below (%)</label><input id="io-smin" type="number" min="1" max="60" value="18"></div><div class="field"><label for="io-tmax">Alert when air temperature exceeds (&deg;C)</label><input id="io-tmax" type="number" min="20" max="50" value="36"></div></div>
+    <ul class="alerts" id="io-alerts" style="margin-top:12px"></ul>
+    <p class="small faint">Thresholds are set by you; they are not agronomic recommendations.</p></article>
+</div>
+
+<article class="card" style="margin-top:16px">
+  <header><h3><i data-icon="git-branch"></i>How field readings reach FARMVERSE</h3></header>
+  <svg viewBox="0 0 980 120" role="img" aria-label="Sensor data flow from field to dashboard" style="width:100%;height:auto">
+    <g font-family="IBM Plex Sans, sans-serif" font-size="13" text-anchor="middle">
+      <g fill="#F2F0E7" stroke="#CFCBBD"><rect x="5" y="30" width="125" height="56" rx="6"/><rect x="155" y="30" width="125" height="56" rx="6"/><rect x="305" y="30" width="125" height="56" rx="6"/><rect x="455" y="30" width="125" height="56" rx="6"/><rect x="605" y="30" width="125" height="56" rx="6"/><rect x="755" y="30" width="105" height="56" rx="6"/></g>
+      <rect x="880" y="30" width="95" height="56" rx="6" fill="#1B4430"/>
+      <g fill="#142019"><text x="67" y="55">Soil and air</text><text x="67" y="72">sensors</text><text x="217" y="55">Microcontroller</text><text x="217" y="72">node</text><text x="367" y="55">LoRa radio</text><text x="367" y="72">uplink</text><text x="517" y="55">Gateway</text><text x="517" y="72">(Dragino)</text><text x="667" y="55">MQTT broker,</text><text x="667" y="72">mqtt_bridge.py</text><text x="807" y="55">FastAPI and</text><text x="807" y="72">SQLite</text></g>
+      <text x="927" y="62" fill="#fff">Dashboard</text>
+      <g stroke="#2F7D4F" stroke-width="2" marker-end="url(#ar)"><line x1="130" y1="58" x2="152" y2="58"/><line x1="280" y1="58" x2="302" y2="58"/><line x1="430" y1="58" x2="452" y2="58"/><line x1="580" y1="58" x2="602" y2="58"/><line x1="730" y1="58" x2="752" y2="58"/><line x1="860" y1="58" x2="877" y2="58"/></g>
+      <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#2F7D4F"/></marker></defs>
+    </g>
+  </svg>
+  <p class="small muted">The backend (<span class="mono">backend/app.py</span>) stores readings exactly as received and rejects out-of-range values. Set its address under <a href="settings.html">Settings</a> to switch this page to live data. Gateway model, sensor models and payload field names must be confirmed against the team's hardware.</p>
+</article>

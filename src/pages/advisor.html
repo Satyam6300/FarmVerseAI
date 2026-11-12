@@ -1,0 +1,20 @@
+<!-- title: AI Farm Advisor &middot; FARMVERSE AI | desc: Ask questions about rainfall, dry spells, vegetation, soil moisture, yields and rotations; answers come only from the data in FARMVERSE AI. | page: advisor | layout: app | icon: bot | scripts: assets/js/rotations-data.js,assets/js/rotation-rules.js,assets/js/climate.js,assets/js/series.js,assets/js/advisor.js -->
+<div class="grid g-21">
+  <section class="card row2 chat" aria-label="Conversation">
+    <div class="chat-log" id="ad-log" aria-live="polite"></div>
+    <form class="chat-input" id="ad-form"><label class="visually-hidden" for="ad-q" data-i18n="adv.placeholder"></label><input id="ad-q" autocomplete="off" maxlength="300" data-i18n-placeholder="adv.placeholder"><button class="btn btn-primary" type="submit"><i data-icon="send"></i><span data-i18n="adv.send"></span></button></form>
+  </section>
+  <aside class="card">
+    <header><h3><i data-icon="sparkles"></i><span data-i18n="adv.try"></span></h3></header>
+    <div class="chips" id="ad-chips" style="flex-direction:column"></div>
+  </aside>
+  <aside class="card">
+    <header><h3><i data-icon="shield-check"></i>How the advisor works</h3></header>
+    <ul class="small">
+      <li>It matches your question to a topic and builds the answer from data already loaded in the app: NASA POWER, MODIS, SMAP, district crop statistics, the ICAR-CRIDA plan and your farm profile.</li>
+      <li>It does not use a large language model and does not invent figures, citations or advice.</li>
+      <li>It never gives fertiliser, pesticide or irrigation doses.</li>
+      <li>Every answer labels observations, model estimates and simulated scenarios.</li>
+    </ul>
+  </aside>
+</div>

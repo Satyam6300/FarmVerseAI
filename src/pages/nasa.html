@@ -1,0 +1,65 @@
+<!-- title: NASA Intelligence &middot; FARMVERSE AI | desc: MODIS vegetation since 2001, SMAP soil moisture since 2015 and NASA POWER modelled soil wetness for Kalaburagi. | page: nasa | layout: app | icon: satellite | scripts: assets/vendor/chart.umd.min.js,assets/js/climate.js,assets/js/series.js,assets/js/nasa.js -->
+<section class="band">
+  <div class="band-grid">
+    <div><p class="eyebrow">MODIS &middot; SMAP &middot; GPM IMERG &middot; POWER</p><h1 data-i18n="title.nasa"></h1><p data-i18n="sub.nasa"></p></div>
+    <div class="band-stats" id="n-stats"></div>
+  </div>
+</section>
+
+<div class="notice err" id="n-error" hidden><i data-icon="circle-alert"></i><p id="n-error-t"></p></div>
+
+<div class="tabs" role="tablist">
+  <button role="tab" aria-selected="true" data-tab="veg"><i data-icon="leaf"></i>Vegetation</button>
+  <button role="tab" aria-selected="false" data-tab="soil"><i data-icon="droplets"></i>Soil moisture</button>
+  <button role="tab" aria-selected="false" data-tab="missions"><i data-icon="satellite"></i>Missions and status</button>
+</div>
+
+<section data-pane="veg" class="grid g2">
+  <article class="card span-2">
+    <header><h3>Vegetation index over Kalaburagi, 2001 to today</h3>
+      <div class="seg" role="group" aria-label="Index"><button type="button" data-idx="ndvi" aria-pressed="true">NDVI</button><button type="button" data-idx="evi" aria-pressed="false">EVI</button></div></header>
+    <div class="legend-row"><span><i class="line" style="background:var(--veg)"></i>District mean (pixels inside the boundary)</span><span><i class="line" style="background:var(--earth)"></i>Demonstration field pixel</span></div>
+    <div class="chart tall"><canvas id="c-vts" role="img" aria-label="Vegetation index time series"></canvas></div>
+    <p class="chart-src" id="src-vts"></p>
+  </article>
+  <article class="card">
+    <header><h3>Seasonal pattern for a chosen year</h3>
+      <div class="field" style="flex-direction:row;align-items:center;gap:6px"><label for="n-year" class="small">Year</label><select id="n-year" style="width:auto"></select></div></header>
+    <div class="chart"><canvas id="c-prof" role="img" aria-label="Seasonal vegetation profile"></canvas></div>
+    <p class="chart-src">Line: chosen year. Shaded: 10th to 90th percentile of 2001 to 2025 for the same composite date.</p>
+  </article>
+  <article class="card">
+    <header><h3>Monsoon-season peak each year</h3></header>
+    <div class="chart"><canvas id="c-peak" role="img" aria-label="Annual peak vegetation index from August to October"></canvas></div>
+    <p class="chart-src">Highest district mean between August and October. Higher peaks usually reflect a greener monsoon crop season, but cloud and crop mix also matter.</p>
+  </article>
+  <article class="card span-2">
+    <header><h3><i data-icon="info"></i>How to read vegetation indices</h3></header>
+    <div class="grid g3">
+      <p class="small"><strong>What they are.</strong> NDVI and EVI compare red and near-infrared light reflected by the surface. Dense green vegetation reflects much more near-infrared, so values rise as plants grow.</p>
+      <p class="small"><strong>What they are not.</strong> They do not measure yield, nutrients or crop health directly. Bare soil, cloud residue, weeds and trees all change the value.</p>
+      <p class="small"><strong>This data.</strong> MODIS Terra 16-day composites, about 250 m, read from NASA GIBS tiles through the official colormap (NDVI classes 0.01 wide, EVI 0.025). The field value is one pixel of about 300 m.</p>
+    </div>
+  </article>
+</section>
+
+<section data-pane="soil" class="grid g2" hidden>
+  <article class="card span-2">
+    <header><h3>SMAP surface soil moisture, district mean</h3><span class="tag obs">SMAP L4</span></header>
+    <div class="chart tall"><canvas id="c-smap" role="img" aria-label="SMAP soil moisture time series"></canvas></div>
+    <p class="chart-src">SMAP Level 4 analysed surface soil moisture (top 5 cm), 9 km, 12:00 UTC, sampled every 16 days from April 2015. Level 4 combines SMAP radiometer observations with a land surface model. The record starts in 2015, so it cannot show long-term change.</p>
+  </article>
+  <article class="card span-2">
+    <header><h3>NASA POWER modelled soil wetness at the pilot point</h3><span class="tag model">Model (MERRA-2)</span></header>
+    <div class="chart"><canvas id="c-gwet" role="img" aria-label="Modelled soil wetness"></canvas></div>
+    <p class="chart-src">Monthly mean of GWETTOP (surface layer) and GWETROOT (root zone), dimensionless, 0 = dry and 1 = saturated. Model output, shown separately from SMAP and never mixed with sensor readings.</p>
+  </article>
+  <article class="card span-2">
+    <header><h3><i data-icon="radio"></i>Field sensor soil moisture</h3></header>
+    <p class="small">Ground sensors measure at one depth at one spot and in their own units. They are shown on the <a href="iot.html">IoT Monitoring</a> page and are not combined with satellite or model values here.</p>
+  </article>
+</section>
+
+<section data-pane="missions" hidden>
+  <div class="grid g3" id="n-missions"></div>
+</section>

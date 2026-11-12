@@ -1,0 +1,33 @@
+<!-- title: Data Sources &middot; FARMVERSE AI | desc: Every dataset behind FARMVERSE AI with organisation, variables, resolution, period, access method, retrieval date and limitations. | page: data | layout: app | icon: database | scripts: assets/js/data-sources.js -->
+<section class="band"><div><p class="eyebrow">Transparency</p><h1 data-i18n="title.data"></h1><p data-i18n="sub.data"></p></div></section>
+<h2>Integrated</h2>
+<div class="table-wrap"><table><thead><tr><th>Dataset</th><th>Organisation</th><th>Variables</th><th>Resolution</th><th>Period in app</th><th>Access</th><th>Retrieved</th></tr></thead><tbody id="ds-int"></tbody></table></div>
+<h2 style="margin-top:28px">Known limitations</h2>
+<div class="grid g2">
+  <ul class="small card">
+    <li><strong>NASA POWER</strong> precipitation is MERRA-2 bias-corrected precipitation (reanalysis), on a grid of about 0.5 degree. One value represents roughly 50 km.</li>
+    <li><strong>Missing days</strong> (fill value -999) are excluded. A season with any missing day is left out of averages, never filled.</li>
+    <li><strong>MODIS and SMAP values</strong> are decoded from NASA GIBS visualisation tiles using the official colormaps, so they are quantised to colormap classes (NDVI 0.01, EVI 0.025, SMAP 0.003 m&sup3;/m&sup3;) and lower zoom levels are resampled.</li>
+    <li><strong>SMAP Level 4</strong> is model value-added and starts in 2015.</li>
+  </ul>
+  <ul class="small card">
+    <li><strong>District crop statistics</strong> are as reported by the government; abrupt changes in area can reflect reporting or boundary changes (Yadgir formed in 2009-10). Rows with area below 10% of the median are flagged.</li>
+    <li><strong>The ICAR-CRIDA plan</strong> dates from 2011 and covers rainfed farming. Its crop table refers to the district as it was then.</li>
+    <li><strong>Crop durations</strong> come from variety lists; most are from Tamil Nadu Agricultural University pages and may differ from Karnataka varieties.</li>
+    <li><strong>The demonstration field</strong> is an illustrative outline drawn on satellite imagery, not a surveyed parcel.</li>
+  </ul>
+</div>
+<h2 style="margin-top:28px">Planned, not integrated</h2>
+<div class="table-wrap"><table><thead><tr><th>Dataset</th><th>Organisation</th><th>Intended use</th><th>Status</th></tr></thead><tbody>
+  <tr><td>Harmonized Landsat Sentinel-2 (HLS)</td><td>NASA, combining NASA/USGS Landsat and ESA Sentinel-2</td><td>30 m field-scale vegetation</td><td><span class="tag missing">Not integrated</span></td></tr>
+  <tr><td>Team Sentinel-2 yield pipeline</td><td>Team, using ESA Sentinel-2 via Google Earth Engine</td><td>Yield estimates with NDVI, EVI, NDWI, SAVI</td><td><span class="tag missing">Awaiting export to data/team_model.json</span></td></tr>
+  <tr><td>LoRa field sensors</td><td>Team hardware</td><td>Soil moisture and temperature, air temperature, humidity</td><td><span class="tag missing">Backend ready, hardware not connected</span></td></tr>
+  <tr><td>Soil Health Card data</td><td>Government of India</td><td>Measured soil pH and organic carbon</td><td><span class="tag missing">Entered manually by the farmer</span></td></tr>
+</tbody></table></div>
+<h2 style="margin-top:28px">Acknowledgements and licences</h2>
+<div class="card small">
+  <p>These data were obtained from the NASA Langley Research Center POWER Project funded through the NASA Earth Science Applied Science Program. Imagery is from NASA's Global Imagery Browse Services (GIBS), part of NASA's Earth Science Data and Information System (ESDIS). NASA does not endorse FARMVERSE AI.</p>
+  <p>District boundary: <a href="https://github.com/datameet/maps" target="_blank" rel="noopener">DataMeet India community</a>, CC BY 4.0. Crop statistics: DES and UPAG (Ministry of Agriculture and Farmers Welfare) via the <a href="https://ckandev.indiadataportal.com/dataset/area-production-yield-apy" target="_blank" rel="noopener">India Data Portal</a>, Open Data Commons Attribution License. Agronomy: <a href="https://www.icar-crida.res.in/CP/Karnataka/UAS,%20Raichur/KA8-Gulbarga%203.2.2011.pdf" target="_blank" rel="noopener">ICAR-CRIDA and UAS Raichur contingency plan</a>.</p>
+  <p>Basemaps (online only): Esri World Imagery (Esri, Maxar, Earthstar Geographics, GIS User Community) and OpenStreetMap contributors. Place search: OpenStreetMap Nominatim.</p>
+  <p>Software and fonts, served from this site: Leaflet (BSD-2-Clause, <a href="assets/vendor/leaflet/LICENSE.txt">licence</a>), Leaflet.draw (MIT), Chart.js 4.6.1 (MIT, <a href="assets/vendor/LICENSE-chartjs.md">licence</a>), Lucide icons (ISC, <a href="assets/vendor/LICENSE-lucide.txt">licence</a>), IBM Plex and Noto Sans Kannada and Devanagari (SIL Open Font License 1.1).</p>
+</div>

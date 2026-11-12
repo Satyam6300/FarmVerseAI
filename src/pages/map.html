@@ -1,0 +1,48 @@
+<!-- title: Farm Map &middot; FARMVERSE AI | desc: Interactive map of Kalaburagi with NASA MODIS vegetation, SMAP soil moisture, GPM IMERG rainfall and land surface temperature layers. | page: map | layout: app | icon: map | css: assets/vendor/leaflet/leaflet.css,assets/vendor/leaflet-draw/leaflet.draw.css | scripts: assets/vendor/leaflet/leaflet.js,assets/vendor/leaflet-draw/leaflet.draw.js,assets/js/mapkit.js,assets/js/map.js -->
+<div class="map-page">
+  <aside class="map-panel" aria-label="Map layers">
+    <div class="field" style="margin-bottom:14px">
+      <label for="m-search" data-i18n="farm.search"></label>
+      <div style="display:flex;gap:6px"><input id="m-search" type="search" placeholder="Kalaburagi, Aland, Sedam..."><button class="btn btn-ghost btn-sm" id="m-search-btn" type="button" aria-label="Search"><i data-icon="search"></i></button></div>
+      <span class="hint" id="m-search-msg">Place search uses OpenStreetMap Nominatim and needs internet.</span>
+      <ul id="m-search-results" class="small" style="list-style:none;padding:0;margin:4px 0 0"></ul>
+    </div>
+    <h3>Base map</h3>
+    <div class="layer-list" style="margin-bottom:14px">
+      <label class="layer-opt"><input type="radio" name="base" value="esri" checked><span>High-resolution imagery<small>Esri World Imagery, needs internet</small></span></label>
+      <label class="layer-opt"><input type="radio" name="base" value="truecolor"><span>MODIS true colour (NASA)<small>Daily, about 250 m, works offline for cached dates</small></span></label>
+      <label class="layer-opt"><input type="radio" name="base" value="osm"><span>Street map<small>OpenStreetMap, needs internet</small></span></label>
+    </div>
+    <h3>NASA data layer</h3>
+    <div class="layer-list" id="m-overlays"></div>
+    <div class="field" style="margin-top:12px">
+      <label for="m-date">Observation date</label>
+      <input id="m-date" type="date">
+      <span class="hint" id="m-date-hint"></span>
+      <div class="btn-row" id="m-cached" style="margin-top:6px"></div>
+    </div>
+    <div class="field" style="margin-top:10px">
+      <label for="m-opacity">Layer opacity</label>
+      <input id="m-opacity" type="range" min="0.2" max="1" step="0.05" value="0.8">
+    </div>
+    <div id="m-legend" style="margin-top:12px"></div>
+    <p class="small muted" id="m-note" style="margin-top:8px"></p>
+    <h3 style="margin-top:14px">Boundaries</h3>
+    <label class="check"><input type="checkbox" id="m-district" checked> Kalaburagi district boundary <span class="tag gov">Census 2011</span></label>
+    <label class="check"><input type="checkbox" id="m-farm" checked> My farm or demonstration field</label>
+  </aside>
+
+  <div style="position:relative;min-height:520px"><div id="m-map" class="map" style="height:100%"></div><div class="map-badge" id="m-badge"></div></div>
+
+  <aside class="map-panel" aria-live="polite">
+    <h3><i data-icon="crosshair"></i> Selected location</h3>
+    <div id="m-info"><p class="muted small">Tap or click the map to read the active NASA layer at that point. Use the drawing tools on the map to outline your field.</p></div>
+    <div id="m-draw" hidden class="card" style="margin-top:12px;padding:12px">
+      <h4>New field outline</h4>
+      <p class="small" id="m-draw-area"></p>
+      <div class="btn-row"><button class="btn btn-primary btn-sm" id="m-save-field" type="button">Save as my field</button><button class="btn btn-ghost btn-sm" id="m-discard" type="button">Discard</button></div>
+    </div>
+    <details class="more expert-only" style="margin-top:14px" open><summary>Layer metadata</summary><div id="m-meta"></div></details>
+    <div class="notice info" style="margin-top:14px"><i data-icon="info"></i><p>Values are read from NASA GIBS visualisation tiles using the official colormap, so they are class ranges (for example NDVI 0.53 to 0.54), not raw science values.</p></div>
+  </aside>
+</div>

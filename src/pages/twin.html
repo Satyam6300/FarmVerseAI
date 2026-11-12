@@ -1,0 +1,58 @@
+<!-- title: Farm Digital Twin &middot; FARMVERSE AI | desc: Interactive simulation of three crop-rotation scenarios on a Kalaburagi field, tested against 35 years of NASA POWER weather. | page: twin | layout: app | icon: box | scripts: assets/js/rotations-data.js,assets/js/rotation-rules.js,assets/js/climate.js,assets/js/twin.js -->
+<section class="band">
+  <div class="band-grid">
+    <div><p class="eyebrow">Simulated scenarios &middot; observed weather</p><h1 data-i18n="title.twin"></h1><p data-i18n="sub.twin"></p></div>
+    <div class="band-stats" id="tw-stats"></div>
+  </div>
+</section>
+
+<div class="notice warn" id="tw-climate-msg" hidden><i data-icon="triangle-alert"></i><p id="tw-climate-t"></p></div>
+
+<div class="twin-layout">
+  <aside class="stack">
+    <div class="scenario-tabs" role="tablist" aria-label="Scenarios" id="tw-tabs"></div>
+    <article class="card" id="tw-editor"></article>
+    <article class="card">
+      <header><h3><i data-icon="tractor"></i>Farm inputs</h3><a class="small" href="farm.html" data-i18n="c.edit"></a></header>
+      <div id="tw-farm" class="small"></div>
+    </article>
+  </aside>
+
+  <div class="stack">
+    <article class="card dark">
+      <header><h2><i data-icon="sprout"></i><span data-i18n="twin.field"></span>: <span id="tw-active-name"></span></h2><span class="tag sim" data-i18n="tag.sim"></span></header>
+      <div class="field-viz">
+        <svg id="tw-field" viewBox="0 0 640 300" role="img" aria-label="Field view of the selected scenario"></svg>
+        <div style="display:flex;gap:12px;align-items:center;margin-top:10px;flex-wrap:wrap">
+          <label for="tw-month" class="small" style="color:#CFE0D3">Month</label>
+          <input id="tw-month" type="range" min="0" max="11" step="1" value="2" style="flex:1;min-width:180px" aria-describedby="tw-month-label">
+          <strong id="tw-month-label" class="num" style="color:#fff;min-width:60px"></strong>
+          <button class="btn btn-dark-ghost btn-sm" type="button" id="tw-play"><i data-icon="play"></i>Play season</button>
+        </div>
+        <p class="small" id="tw-month-info" style="color:#BCCCBF;margin:8px 0 0"></p>
+      </div>
+    </article>
+
+    <article class="card">
+      <header><h2><i data-icon="calendar"></i><span data-i18n="twin.timeline"></span></h2><span class="small faint">June to May. All three scenarios.</span></header>
+      <div class="timeline"><svg id="tw-timeline" viewBox="0 0 900 360" role="img" aria-label="Crop calendar for all scenarios with monthly rainfall"></svg></div>
+      <div class="legend-row" style="margin-top:8px"><span><i style="background:#E8E4D6"></i>Sowing window in the district plan</span><span><i style="background:#2F7D4F"></i>Crop on the field (sowing to harvest)</span><span><i style="background:#B08A5E"></i>Rain 1991 to 2010</span><span><i style="background:#2F6F9F"></i>Rain 2011 onward</span><span><i style="background:#C7652A"></i>Hot days (35 &deg;C or more), recent</span></div>
+    </article>
+
+    <article class="card" id="compare">
+      <header><h2><i data-icon="git-compare"></i><span data-i18n="twin.compare"></span></h2><span class="tag sim" data-i18n="tag.sim"></span></header>
+      <div class="cmp-grid" id="tw-cmp"></div>
+      <p class="small faint" style="margin-top:10px">Exposure rows apply each scenario's crop calendar to the observed NASA POWER weather of every year from 2011 to the last complete year, then average. They describe the conditions the calendar would have met, not outcomes. No yield, profit, soil-health or water-saving figures are calculated.</p>
+    </article>
+
+    <article class="card">
+      <header><h2><i data-icon="list-checks"></i><span data-i18n="twin.whatChanges"></span></h2></header>
+      <div class="grid g2" id="tw-changes"></div>
+    </article>
+
+    <article class="card">
+      <header><h2><i data-icon="circle-help"></i>Assumptions and missing information</h2></header>
+      <div class="grid g2"><div><h4>Assumptions</h4><ul class="small" id="tw-assume"></ul></div><div><h4>Missing information</h4><ul class="small" id="tw-missing"></ul></div></div>
+    </article>
+  </div>
+</div>

@@ -1,0 +1,89 @@
+<!-- title: Climate Analytics &middot; FARMVERSE AI | desc: Rainfall, dry spell, temperature and heat trends for Kalaburagi from 35 years of NASA POWER daily data. | page: climate | layout: app | icon: cloud-sun | scripts: assets/vendor/chart.umd.min.js,assets/js/climate.js,assets/js/climate-page.js -->
+<section class="band">
+  <div class="band-grid">
+    <div><p class="eyebrow">NASA POWER &middot; 1991 to present</p><h1 data-i18n="title.climate"></h1><p data-i18n="sub.climate"></p></div>
+    <div class="band-stats" id="cl-stats"></div>
+  </div>
+</section>
+
+<div class="card" style="margin-bottom:16px">
+  <form id="cl-form" class="form-grid" novalidate style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr));align-items:end">
+    <div class="field"><label for="cl-lat">Latitude</label><input id="cl-lat" type="number" step="0.01" min="6" max="37.5" value="17.33"><span class="error" id="cl-lat-e"></span></div>
+    <div class="field"><label for="cl-lon">Longitude</label><input id="cl-lon" type="number" step="0.01" min="68" max="97.5" value="76.83"><span class="error" id="cl-lon-e"></span></div>
+    <div class="field"><label for="cl-b0">Baseline from</label><input id="cl-b0" type="number" min="1991" value="1991"></div>
+    <div class="field"><label for="cl-b1">Baseline to</label><input id="cl-b1" type="number" min="1991" value="2010"></div>
+    <div class="field"><label for="cl-r0">Recent from</label><input id="cl-r0" type="number" min="1991" value="2011"></div>
+    <div class="field"><label for="cl-r1">Recent to</label><input id="cl-r1" type="number" min="1991"></div>
+    <div class="field expert-only"><label for="cl-dry">Dry day below (mm)</label><input id="cl-dry" type="number" step="0.1" min="0.1" max="20" value="2.5"></div>
+    <div class="field expert-only"><label for="cl-hot">Hot day at or above (&deg;C)</label><input id="cl-hot" type="number" step="0.5" min="30" max="48" value="40"></div>
+    <div class="btn-row"><button class="btn btn-primary" type="submit"><i data-icon="refresh-cw"></i>Update</button><button class="btn btn-ghost" type="button" id="cl-csv" disabled><i data-icon="download"></i>CSV</button></div>
+  </form>
+  <p class="small error" id="cl-form-e" style="color:var(--err-ink);margin:8px 0 0"></p>
+  <div class="status loading" id="cl-status" role="status" style="margin-top:8px"><span class="dot"></span><span class="text">Loading NASA POWER data</span></div>
+</div>
+
+<div class="notice err" id="cl-error" hidden><i data-icon="circle-alert"></i><div><p><strong>NASA POWER data could not be loaded.</strong> No charts are drawn, because the app never substitutes values.</p><p class="small" id="cl-error-d"></p></div></div>
+
+<div id="cl-results" hidden>
+  <article class="card farmer-only" style="margin-bottom:16px;--accent-c:var(--rain)">
+    <header><h2><i data-icon="sparkles"></i>In plain words</h2><span class="tag obs" data-i18n="tag.obs"></span></header>
+    <ul class="check-list" id="cl-plain"></ul>
+  </article>
+
+  <div class="tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-tab="rain"><i data-icon="cloud-rain"></i>Rainfall</button>
+    <button role="tab" aria-selected="false" data-tab="dry"><i data-icon="sun"></i>Dry spells</button>
+    <button role="tab" aria-selected="false" data-tab="temp"><i data-icon="thermometer"></i>Temperature</button>
+    <button role="tab" aria-selected="false" data-tab="table"><i data-icon="list-checks"></i>Summary table</button>
+  </div>
+
+  <section data-pane="rain" class="grid g2">
+    <article class="card span-2">
+      <header><h3>June to September rainfall each year</h3><span class="tag obs">PRECTOTCORR</span></header>
+      <div class="legend-row"><span><i style="background:#B08A5E"></i>Baseline years</span><span><i style="background:#2F6F9F"></i>Recent years</span><span><i style="background:#C9CFC8"></i>Outside both</span><span><i class="line" style="background:#142019"></i>Period means</span></div>
+      <div class="chart tall"><canvas id="c-jjas" role="img" aria-label="June to September rainfall per year"></canvas></div>
+      <p class="chart-src" id="src-jjas"></p>
+    </article>
+    <article class="card">
+      <header><h3>Monthly rainfall: baseline against recent</h3></header>
+      <div class="chart"><canvas id="c-month" role="img" aria-label="Average monthly rainfall in each period"></canvas></div>
+      <p class="chart-src">Mean of complete months in each period.</p>
+    </article>
+    <article class="card">
+      <header><h3>This year so far: cumulative rainfall</h3></header>
+      <div class="chart"><canvas id="c-cum" role="img" aria-label="Cumulative rainfall this year compared with normal"></canvas></div>
+      <p class="chart-src" id="src-cum"></p>
+    </article>
+    <article class="card span-2">
+      <header><h3>Rainfall anomaly: percent of the 1991 to 2020 normal</h3></header>
+      <div class="chart"><canvas id="c-anom" role="img" aria-label="June to September rainfall as percent of normal"></canvas></div>
+      <p class="chart-src">Bars above 100% are wetter than normal. The normal is the 1991 to 2020 mean June to September total at this point.</p>
+    </article>
+  </section>
+
+  <section data-pane="dry" class="grid g2" hidden>
+    <article class="card span-2">
+      <header><h3>Longest dry spell within June to September</h3><span class="tag obs">Derived</span></header>
+      <div class="chart tall"><canvas id="c-dry" role="img" aria-label="Longest monsoon dry spell per year"></canvas></div>
+      <p class="chart-src">Consecutive days with rain below the dry-day threshold. The ICAR-CRIDA district plan treats two rainless weeks in the season as a mid-season drought; the dashed line marks 14 days.</p>
+    </article>
+  </section>
+
+  <section data-pane="temp" class="grid g2" hidden>
+    <article class="card span-2">
+      <header><h3>Annual mean daily maximum and minimum temperature</h3><span class="tag obs">T2M_MAX, T2M_MIN</span></header>
+      <div class="chart tall"><canvas id="c-temp" role="img" aria-label="Annual mean maximum and minimum temperature"></canvas></div>
+      <p class="chart-src" id="src-temp"></p>
+    </article>
+    <article class="card span-2">
+      <header><h3 id="h-hot">Very hot days per year</h3></header>
+      <div class="chart"><canvas id="c-hot" role="img" aria-label="Number of very hot days per year"></canvas></div>
+    </article>
+  </section>
+
+  <section data-pane="table" hidden>
+    <div class="table-wrap"><table><thead><tr><th>Indicator</th><th class="n">Baseline mean</th><th class="n">Recent mean</th><th class="n">Difference</th><th>Unit</th></tr></thead><tbody id="cl-table"></tbody><caption id="cl-cap"></caption></table></div>
+  </section>
+
+  <div class="notice info" style="margin-top:16px"><i data-icon="info"></i><p>NASA POWER precipitation is MERRA-2 reanalysis corrected with gauge and satellite observations, on a grid of about 0.5 degree (roughly 50 km). It describes the area, not one field. Differences between periods are differences of means without a significance test, and trend lines are least-squares fits.</p></div>
+</div>

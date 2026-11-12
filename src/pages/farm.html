@@ -1,0 +1,67 @@
+<!-- title: My Farm &middot; FARMVERSE AI | desc: Set up your farm: location, field outline, crops, soil and water. Unknown details stay marked as unknown. | page: farm | layout: app | icon: tractor | css: assets/vendor/leaflet/leaflet.css | scripts: assets/vendor/leaflet/leaflet.js,assets/vendor/leaflet-draw/leaflet.draw.js,assets/js/rotations-data.js,assets/js/mapkit.js,assets/js/farm.js -->
+<section class="band"><div><p class="eyebrow" data-i18n="nav.myfarm"></p><h1 data-i18n="title.farm"></h1><p data-i18n="sub.farm"></p></div></section>
+
+<div class="grid" style="grid-template-columns:minmax(0,2fr) minmax(280px,1fr);align-items:start" id="farm-grid">
+  <form class="card" id="farm-form" novalidate>
+    <nav class="steps-nav" aria-label="Setup steps">
+      <button type="button" data-step="1" aria-current="step"><b>1</b><span data-i18n="farm.step1"></span></button>
+      <button type="button" data-step="2"><b>2</b><span data-i18n="farm.step2"></span></button>
+      <button type="button" data-step="3"><b>3</b><span data-i18n="farm.step3"></span></button>
+      <button type="button" data-step="4"><b>4</b><span data-i18n="farm.step4"></span></button>
+    </nav>
+
+    <fieldset data-panel="1">
+      <legend class="visually-hidden" data-i18n="farm.step1"></legend>
+      <p class="muted" data-i18n="farm.draw"></p>
+      <div id="f-map" class="map" style="height:340px"></div>
+      <div class="form-grid" style="margin-top:12px">
+        <div class="field"><label for="f-lat">Latitude</label><input id="f-lat" type="number" step="0.00001" min="6" max="37.5" inputmode="decimal"><span class="error" id="f-lat-e"></span></div>
+        <div class="field"><label for="f-lon">Longitude</label><input id="f-lon" type="number" step="0.00001" min="68" max="97.5" inputmode="decimal"><span class="error" id="f-lon-e"></span></div>
+      </div>
+      <p class="small faint" style="margin-top:8px">To outline the exact field, use the drawing tool on the <a href="map.html">Farm Map</a>. The outline is stored only in this browser.</p>
+    </fieldset>
+
+    <fieldset data-panel="2" hidden>
+      <div class="form-grid">
+        <div class="field"><label for="f-name" data-i18n="farm.name"></label><input id="f-name" maxlength="60" autocomplete="off"></div>
+        <div class="field"><label for="f-village" data-i18n="farm.village"></label><input id="f-village" maxlength="60" autocomplete="off"></div>
+        <div class="field"><label for="f-district" data-i18n="farm.district"></label><input id="f-district" maxlength="60" value="Kalaburagi"></div>
+        <div class="field"><label for="f-area" data-i18n="farm.area"></label><input id="f-area" type="number" step="0.01" min="0" max="10000" inputmode="decimal"><span class="hint" id="f-area-hint"></span><span class="error" id="f-area-e"></span></div>
+      </div>
+      <p class="small faint" style="margin-top:10px">No phone number, name of the farmer or land record number is needed.</p>
+    </fieldset>
+
+    <fieldset data-panel="3" hidden>
+      <div class="form-grid">
+        <div class="field"><label for="f-crop" data-i18n="farm.current"></label><select id="f-crop"></select></div>
+        <div class="field"><label for="f-season" data-i18n="farm.season"></label><select id="f-season"><option value="">Not sure</option><option value="kharif" data-i18n="season.kharif"></option><option value="rabi" data-i18n="season.rabi"></option><option value="summer" data-i18n="season.summer"></option></select></div>
+        <div class="field"><label for="f-prevk" data-i18n="farm.prevK"></label><select id="f-prevk"></select></div>
+        <div class="field"><label for="f-prevr" data-i18n="farm.prevR"></label><select id="f-prevr"></select></div>
+        <div class="field" style="grid-column:1/-1"><label for="f-rot">Current rotation (closest match)</label><select id="f-rot"></select><span class="hint">Systems from the ICAR-CRIDA contingency plan for the district. Choose "Not sure" if none fits.</span></div>
+      </div>
+    </fieldset>
+
+    <fieldset data-panel="4" hidden>
+      <div class="form-grid">
+        <div class="field" style="grid-column:1/-1"><label for="f-soil" data-i18n="farm.soilSit"></label><select id="f-soil"></select><span class="hint">Groups used by the district contingency plan. Needed for the rotation shortlist.</span></div>
+        <div class="field"><label for="f-soiltype" data-i18n="farm.soilType"></label><select id="f-soiltype"><option value="">Not sure</option><option>Deep black (clayey)</option><option>Medium black</option><option>Shallow black</option><option>Red sandy</option><option>Red clay loam</option><option>Alluvial</option></select></div>
+        <div class="field"><label for="f-ph" data-i18n="farm.ph"></label><input id="f-ph" type="number" step="0.1" min="3" max="11" inputmode="decimal"><span class="error" id="f-ph-e"></span></div>
+        <div class="field"><label for="f-oc" data-i18n="farm.oc"></label><input id="f-oc" type="number" step="0.01" min="0" max="10" inputmode="decimal"><span class="error" id="f-oc-e"></span></div>
+        <div class="field"><label for="f-irr" data-i18n="farm.irr"></label><select id="f-irr"><option value="">Not sure</option><option value="rainfed">Rainfed only</option><option value="protective">Protective irrigation (one or two irrigations)</option><option value="irrigated">Assured irrigation</option></select></div>
+        <div class="field"><label for="f-water" data-i18n="farm.water"></label><select id="f-water"><option value="">Not sure</option><option value="scarce">Scarce in most years</option><option value="variable">Varies year to year</option><option value="reliable">Reliable</option></select></div>
+      </div>
+    </fieldset>
+
+    <div class="btn-row" style="margin-top:18px;justify-content:space-between">
+      <div class="btn-row"><button type="button" class="btn btn-ghost" id="f-back" data-i18n="c.back"></button><button type="button" class="btn btn-primary" id="f-next" data-i18n="c.next"></button></div>
+      <div class="btn-row"><button type="submit" class="btn btn-lime" id="f-save"><i data-icon="check"></i><span data-i18n="c.save"></span></button><button type="button" class="btn btn-ghost" id="f-demo" data-i18n="farm.demo"></button></div>
+    </div>
+    <div class="notice ok" id="f-saved" hidden style="margin-top:12px"><i data-icon="circle-check"></i><p data-i18n="farm.saved"></p></div>
+  </form>
+
+  <aside class="card" aria-live="polite">
+    <header><h2><i data-icon="list-checks"></i>Profile status</h2></header>
+    <div id="f-summary"></div>
+    <p class="small faint" style="margin-top:10px">Details marked Missing are not guessed. Pages that need them say so instead of producing a result.</p>
+  </aside>
+</div>

@@ -1,0 +1,43 @@
+<!-- title: Farm Report &middot; FARMVERSE AI | desc: Printable farm report with climate summary, vegetation, rotation comparison, data sources and limitations, plus CSV exports. | page: reports | layout: app | icon: file-bar-chart | scripts: assets/vendor/chart.umd.min.js,assets/js/rotations-data.js,assets/js/rotation-rules.js,assets/js/climate.js,assets/js/series.js,assets/js/reports.js -->
+<section class="band no-print"><div class="band-grid"><div><p class="eyebrow">PDF &middot; CSV</p><h1 data-i18n="title.reports"></h1><p data-i18n="sub.reports"></p></div>
+  <div class="btn-row" style="justify-content:flex-end"><button class="btn btn-lime" type="button" id="rp-print"><i data-icon="printer"></i><span data-i18n="c.print"></span></button></div></div></section>
+
+<div class="grid g-21">
+  <div class="row2 stack" id="rp-doc">
+    <article class="card"><header><div><p class="eyebrow">FARMVERSE AI farm report</p><h2 id="rp-title"></h2></div><span id="rp-date" class="small faint"></span></header><div id="rp-farm"></div></article>
+    <article class="card" data-sec="climate"><header><h3>Climate summary</h3><span class="tag obs">NASA POWER</span></header><div id="rp-climate"></div><div class="chart short"><canvas id="rp-c-month" role="img" aria-label="Monthly rainfall this year against normal"></canvas></div></article>
+    <article class="card" data-sec="veg"><header><h3>Vegetation and soil moisture</h3><span class="tag obs">MODIS, SMAP</span></header><div id="rp-veg"></div></article>
+    <article class="card" data-sec="rot"><header><h3>Rotation scenarios from the Digital Twin</h3><span class="tag sim" data-i18n="tag.sim"></span></header><div id="rp-rot"></div></article>
+    <article class="card" data-sec="iot"><header><h3>Field sensors</h3></header><div id="rp-iot"></div></article>
+    <article class="card" data-sec="limits"><header><h3>Data sources and limitations</h3></header>
+      <ul class="small">
+        <li>Climate: NASA POWER daily data (MERRA-2 based, about 50 km grid) at 17.33 N, 76.83 E. Not a field measurement.</li>
+        <li>Vegetation: MODIS Terra 16-day NDVI from NASA GIBS, about 250 m. NDVI is not a measure of crop health or nutrients.</li>
+        <li>Soil moisture: SMAP Level 4 surface (top 5 cm), 9 km, model value-added, since 2015.</li>
+        <li>Agronomy: ICAR-CRIDA Agriculture Contingency Plan for Gulbarga district (2011). Crop durations: published variety lists.</li>
+        <li>Scenarios are calendars tested against past weather. They are not yield, income, soil-health or water-saving predictions.</li>
+        <li>This report supports discussion with an agricultural officer. It is not advice.</li>
+      </ul></article>
+  </div>
+  <aside class="card no-print">
+    <header><h3><i data-icon="list-checks"></i>Include in the report</h3></header>
+    <div class="stack" style="--g:6px">
+      <label class="check"><input type="checkbox" data-toggle="climate" checked> Climate summary</label>
+      <label class="check"><input type="checkbox" data-toggle="veg" checked> Vegetation and soil moisture</label>
+      <label class="check"><input type="checkbox" data-toggle="rot" checked> Rotation scenarios</label>
+      <label class="check"><input type="checkbox" data-toggle="iot" checked> Field sensors</label>
+      <label class="check"><input type="checkbox" data-toggle="limits" checked> Sources and limitations</label>
+    </div>
+  </aside>
+  <aside class="card no-print">
+    <header><h3><i data-icon="download"></i>Download data</h3></header>
+    <div class="stack">
+      <button class="btn btn-ghost btn-sm" type="button" data-dl="climate">Yearly climate indicators (CSV)</button>
+      <button class="btn btn-ghost btn-sm" type="button" data-dl="ndvi">NDVI, EVI and SMAP series (CSV)</button>
+      <button class="btn btn-ghost btn-sm" type="button" data-dl="crops">District crop statistics (CSV)</button>
+      <button class="btn btn-ghost btn-sm" type="button" data-dl="twin">Digital Twin scenarios (CSV)</button>
+      <button class="btn btn-ghost btn-sm" type="button" data-dl="farm">My farm profile (JSON)</button>
+    </div>
+    <p class="small faint" style="margin-top:10px">Files are created in your browser; nothing is uploaded.</p>
+  </aside>
+</div>

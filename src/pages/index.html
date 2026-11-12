@@ -1,0 +1,108 @@
+<!-- title: FARMVERSE AI &middot; NASA Earth observations for crop-rotation decisions | desc: FARMVERSE AI turns NASA climate, vegetation and soil-moisture data, district crop records and farm details into crop-rotation comparisons for Kalaburagi, Karnataka. | page: home | layout: landing | scripts: assets/js/landing.js -->
+<nav class="lp-nav" aria-label="Main">
+  <div class="in">
+    <a class="sb-brand" href="index.html" style="padding:0"><img src="favicon.svg" alt="" width="30" height="30"><span>FARMVERSE<em>AI</em></span></a>
+    <div class="links">
+      <a href="#questions">What it answers</a><a href="#data">NASA data</a><a href="#twin">Digital Twin</a><a href="#honesty">Limits</a>
+      <a class="btn btn-lime btn-sm" href="dashboard.html" style="color:var(--forest-900)">Open the app</a>
+    </div>
+  </div>
+</nav>
+<main id="main">
+  <section class="lp-hero">
+    <div class="lp-wrap lp-hero-grid">
+      <div>
+        <p class="eyebrow" style="color:var(--lime)">NASA Space Apps Challenge 2026 &middot; Field Shift: Adapting Farms with NASA Data</p>
+        <h1>Understand Your Land. Predict the Change. <em>Grow Smarter.</em></h1>
+        <p class="lead">FARMVERSE AI shows a farmer in Kalaburagi how rainfall, dry spells, heat and vegetation have shifted since 1991, then tests crop rotations against that record so the next season's choice rests on evidence.</p>
+        <div class="btn-row" style="margin-top:24px">
+          <a class="btn btn-lime" href="dashboard.html"><i data-icon="layout-dashboard"></i>Explore Farm Intelligence</a>
+          <a class="btn btn-dark-ghost" href="#how"><i data-icon="circle-help"></i>How It Works</a>
+          <button class="btn btn-dark-ghost" type="button" id="tour-btn"><i data-icon="play"></i>Guided demo</button>
+        </div>
+        <div class="band-stats" style="margin-top:28px" id="lp-stats"></div>
+      </div>
+      <figure class="sat-figure">
+        <div class="seg sat-toggle" role="group" aria-label="Satellite view"><button type="button" data-view="tc" aria-pressed="true">True colour</button><button type="button" data-view="ndvi" aria-pressed="false">Vegetation (NDVI)</button></div>
+        <img id="lp-img" src="data/hero_truecolor.jpg" alt="NASA MODIS true colour image of Kalaburagi district with the district boundary outlined" width="672" height="485">
+        <figcaption><span id="lp-cap">NASA MODIS Terra true colour, 11 Nov 2026. White line: Kalaburagi district (Census 2011).</span><span>Source: NASA GIBS</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="lp-sec" id="questions">
+    <div class="lp-wrap">
+      <p class="eyebrow">One decision</p>
+      <h2>Which crop rotation should this farm consider for the next growing cycle?</h2>
+      <p class="muted" style="max-width:720px">Every module answers part of that question, with the source and limits of each number shown beside it.</p>
+      <div class="lp-q">
+        <a href="dashboard.html"><i data-icon="layout-dashboard"></i><strong>What is happening on my farm?</strong><span>Command Center: this season's rain, heat, soil moisture and vegetation against the usual pattern.</span></a>
+        <a href="climate.html"><i data-icon="cloud-sun"></i><strong>How has the climate changed?</strong><span>35 years of NASA POWER rainfall, dry spells and temperature, past against recent.</span></a>
+        <a href="nasa.html"><i data-icon="leaf"></i><strong>What is happening to crops here?</strong><span>MODIS vegetation since 2001 and district yields since 1997.</span></a>
+        <a href="twin.html"><i data-icon="box"></i><strong>What could happen under other rotations?</strong><span>The Farm Digital Twin tests three crop calendars against observed weather.</span></a>
+        <a href="rotation.html"><i data-icon="repeat"></i><strong>Which rotations should I explore?</strong><span>Options from the ICAR-CRIDA district plan, filtered by your soil.</span></a>
+        <a href="iot.html"><i data-icon="radio"></i><strong>What does my field data say?</strong><span>LoRa soil and air sensors, kept apart from satellite estimates.</span></a>
+        <a href="advisor.html"><i data-icon="bot"></i><strong>What should I ask an expert?</strong><span>The advisor lists the evidence and what is still unknown.</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="lp-sec dark" id="data">
+    <div class="lp-wrap">
+      <p class="eyebrow" style="color:var(--lime)">NASA Earth observations</p>
+      <h2>Real observations of Kalaburagi, cached for offline demos</h2>
+      <div class="lp-figs">
+        <div class="card dark"><h3><i data-icon="cloud-rain"></i> NASA POWER</h3><p class="muted small">Daily rainfall, maximum and minimum temperature and modelled soil wetness since 1 January 1991.</p><div class="kpi"><div class="value" id="lp-power" style="color:#fff">&nbsp;</div><div class="small muted" id="lp-power-s"></div></div></div>
+        <div class="card dark"><h3><i data-icon="leaf"></i> MODIS vegetation</h3><p class="muted small">16-day NDVI and EVI composites since 2001, decoded over the district boundary and the demonstration field.</p><div class="kpi"><div class="value" id="lp-modis" style="color:#fff">&nbsp;</div><div class="small muted" id="lp-modis-s"></div></div></div>
+        <div class="card dark"><h3><i data-icon="droplets"></i> SMAP soil moisture</h3><p class="muted small">Level 4 surface soil moisture since 2015, plus GPM IMERG rainfall and MODIS surface temperature as map layers.</p><div class="kpi"><div class="value" id="lp-smap" style="color:#fff">&nbsp;</div><div class="small muted" id="lp-smap-s"></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lp-sec" id="how">
+    <div class="lp-wrap">
+      <p class="eyebrow">How it works</p>
+      <h2>From satellite record to a rotation you can discuss</h2>
+      <div class="grid g4" style="margin-top:20px">
+        <div class="card"><p class="eyebrow">01</p><h3>Set up the farm</h3><p class="small muted">Place the field on the map, add crops, soil and water. Unknown details stay marked as unknown.</p></div>
+        <div class="card"><p class="eyebrow">02</p><h3>Read the evidence</h3><p class="small muted">Rainfall, dry spells, heat, vegetation and soil moisture, each with source, date and resolution.</p></div>
+        <div class="card"><p class="eyebrow">03</p><h3>Simulate rotations</h3><p class="small muted">Three crop calendars on one field, tested against every year of observed weather.</p></div>
+        <div class="card"><p class="eyebrow">04</p><h3>Take it to an expert</h3><p class="small muted">Print a report with evidence, trade-offs and missing information for the agricultural officer.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lp-sec alt" id="twin">
+    <div class="lp-wrap lp-hero-grid">
+      <div>
+        <p class="eyebrow">Farm Digital Twin</p>
+        <h2>What changes if the farmer chooses this rotation?</h2>
+        <p>Change a crop, sowing date or duration and watch the field, the season calendar and the comparison update. The twin reports rain during each crop window, the chance of a two-week dry spell after sowing, heat days and months of soil cover.</p>
+        <p class="muted small">It does not invent yields, profits or soil improvements. Simulated rows are tagged as simulated.</p>
+        <a class="btn btn-primary" href="twin.html"><i data-icon="box"></i>Open the Digital Twin</a>
+      </div>
+      <img src="data/hero_ndvi.jpg" alt="MODIS NDVI over Kalaburagi district, 16 October 2026 composite" style="border-radius:12px;border:1px solid var(--line)" width="672" height="485" loading="lazy">
+    </div>
+  </section>
+
+  <section class="lp-sec" id="honesty">
+    <div class="lp-wrap">
+      <p class="eyebrow">Scientific limits</p>
+      <h2>What FARMVERSE AI does not claim</h2>
+      <div class="grid g3" style="margin-top:16px">
+        <div class="card small">NASA POWER values describe a grid cell of about 50 km, not one field. MODIS pixels are about 250 m.</div>
+        <div class="card small">NDVI measures greenness in a composite, not crop health or nutrients.</div>
+        <div class="card small">The baseline yield model is tested year by year and shown even where it does not beat a simple trend.</div>
+        <div class="card small">District yields are government averages, not predictions for a farm.</div>
+        <div class="card small">Rotations come from one 2011 district plan for rainfed farms and are never ranked.</div>
+        <div class="card small">Field sensors are not connected yet; the IoT page has a clearly labelled demo mode.</div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="lp-foot">
+  <div class="lp-wrap" style="display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between">
+    <div><strong style="color:#fff">FARMVERSE AI</strong><br>Built for the NASA Space Apps Challenge 2026 by a team of four from India. NASA does not endorse this project.</div>
+    <div><a href="data-sources.html">Data sources</a> &middot; <a href="about.html">About</a> &middot; <a href="privacy.html">Privacy Policy</a> &middot; <a href="terms.html">Terms and Conditions</a></div>
+  </div>
+</footer>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>FARMVERSE AI</title>
+  <rect width="64" height="64" rx="10" fill="#245C43"/>
+  <!-- orbit arc and observing satellite -->
+  <path d="M10 26 A26 14 0 0 1 54 18" fill="none" stroke="#C9DCC8" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="50" cy="15" r="5" fill="#F7F8F5"/>
+  <!-- field rows -->
+  <path d="M8 56 L24 34 L40 34 L56 56 Z" fill="#6E966D"/>
+  <path d="M27 34 L22 56 M37 34 L42 56 M32 34 L32 56" stroke="#245C43" stroke-width="3"/>
+  <path d="M8 56 L56 56" stroke="#987653" stroke-width="4"/>
+</svg>

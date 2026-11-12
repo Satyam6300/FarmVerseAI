@@ -1,0 +1,54 @@
+<!-- title: Crop Intelligence &middot; FARMVERSE AI | desc: Kalaburagi district crop area and yield since 1997 from government statistics, and a transparent, validated baseline yield model. | page: crops | layout: app | icon: wheat | scripts: assets/vendor/chart.umd.min.js,assets/js/crops.js -->
+<section class="band">
+  <div class="band-grid">
+    <div><p class="eyebrow">DES &middot; UPAG &middot; NASA POWER</p><h1 data-i18n="title.crops"></h1><p data-i18n="sub.crops"></p></div>
+    <div class="field" style="max-width:320px"><label for="cr-crop" style="color:#DCE6DE">Crop and season</label><select id="cr-crop"></select></div>
+  </div>
+</section>
+<div class="notice err" id="cr-error" hidden><i data-icon="circle-alert"></i><p id="cr-error-t"></p></div>
+
+<article class="card farmer-only" style="margin-bottom:16px">
+  <header><h2><i data-icon="sparkles"></i>In plain words</h2></header>
+  <ul class="check-list" id="cr-plain"></ul>
+</article>
+
+<div class="grid g-21">
+  <article class="card row2">
+    <header><h3>District yield each year</h3><span class="tag gov" data-i18n="tag.gov"></span></header>
+    <div class="legend-row"><span><i style="background:#D9B44A"></i>DES (1997-98 to 2022-23)</span><span><i style="background:#8B6A47"></i>UPAG (2023-24 onward)</span><span><i style="background:#C9CFC8"></i>Flagged: excluded from model</span></div>
+    <div class="chart tall"><canvas id="c-yield" role="img" aria-label="District yield per year"></canvas></div>
+    <p class="chart-src" id="src-yield"></p>
+  </article>
+  <article class="card">
+    <header><h3>Area sown each year</h3><span class="tag gov" data-i18n="tag.gov"></span></header>
+    <div class="chart"><canvas id="c-area" role="img" aria-label="District area per year"></canvas></div>
+    <p class="chart-src">Abrupt jumps can reflect reporting or boundary changes as well as real shifts. Yadgir district was formed from Gulbarga in 2009-10.</p>
+  </article>
+  <article class="card">
+    <header><h3>Yield estimate for the latest season</h3><span class="tag model" data-i18n="tag.model"></span></header>
+    <div id="cr-est"></div>
+  </article>
+</div>
+
+<div class="section-title"><h2>Can weather explain district yield? An honest test</h2><span class="tag model">Baseline model, experimental</span></div>
+<div class="grid g-21">
+  <article class="card row2">
+    <header><h3>Forward-chaining test: each year predicted using only earlier years</h3></header>
+    <div class="legend-row"><span><i class="line" style="background:#142019"></i>Reported yield</span><span><i class="line" style="background:#C9A227"></i>Weather model</span><span><i class="line" style="background:#7A857D"></i><span id="lg-best">Best simple baseline</span></span></div>
+    <div class="chart tall"><canvas id="c-val" role="img" aria-label="Model predictions against reported yields"></canvas></div>
+    <p class="chart-src">Ridge regression on a year trend and NASA POWER season weather. Fitted only on years before the year being predicted (minimum 10 years).</p>
+  </article>
+  <article class="card">
+    <header><h3>Error on the test years</h3></header>
+    <div class="table-wrap"><table><thead><tr><th>Method</th><th class="n">MAE (t/ha)</th><th class="n">RMSE (t/ha)</th></tr></thead><tbody id="cr-scores"></tbody></table></div>
+    <p class="small" id="cr-verdict" style="margin-top:10px"></p>
+  </article>
+  <article class="card">
+    <header><h3>What the model uses</h3></header>
+    <div class="chart short"><canvas id="c-coef" role="img" aria-label="Standardised model coefficients"></canvas></div>
+    <p class="chart-src">Standardised coefficients from the model fitted on all clean years. Bars show direction and relative weight, not causation.</p>
+  </article>
+</div>
+
+<div class="section-title"><h2>Team crop-yield pipeline</h2></div>
+<article class="card" id="cr-team"></article>

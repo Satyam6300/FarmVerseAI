@@ -1,0 +1,22 @@
+<!-- title: Settings &middot; FARMVERSE AI | desc: Language, Farmer or Expert view, sensor backend connection and browser data. | page: settings | layout: app | icon: settings | scripts: assets/js/settings.js -->
+<section class="band"><div><p class="eyebrow" data-i18n="nav.settings"></p><h1 data-i18n="title.settings"></h1><p data-i18n="sub.settings"></p></div></section>
+<div class="grid g2">
+  <article class="card"><header><h3><i data-icon="languages"></i><span data-i18n="top.lang"></span></h3></header>
+    <div class="field"><label for="st-lang" data-i18n="top.lang"></label><select id="st-lang"><option value="en">English</option><option value="kn">ಕನ್ನಡ (Kannada)</option><option value="hi">हिन्दी (Hindi)</option></select></div>
+    <p class="small faint" style="margin-top:10px">Navigation, page titles, buttons, alerts, farm setup and advisor topics are translated. Kannada and Hindi text was written with AI assistance and is awaiting review by native speakers. Technical detail in Expert view is in English.</p></article>
+  <article class="card"><header><h3><i data-icon="eye"></i>View</h3></header>
+    <div class="stack">
+      <label class="check"><input type="radio" name="st-mode" value="farmer"> <span><strong data-i18n="top.farmer"></strong><br><span class="small muted">Larger text, plain-language summaries, fewer technical details.</span></span></label>
+      <label class="check"><input type="radio" name="st-mode" value="expert"> <span><strong data-i18n="top.expert"></strong><br><span class="small muted">Dataset metadata, model coefficients, resolutions and method notes.</span></span></label>
+    </div></article>
+  <article class="card"><header><h3><i data-icon="radio"></i>Sensor backend</h3></header>
+    <form id="st-iot" novalidate>
+      <div class="field"><label for="st-ep">Backend address</label><input id="st-ep" type="url" placeholder="http://localhost:8080" inputmode="url"><span class="hint">The FARMVERSE FastAPI backend (backend/app.py). For a production address, add it to the page's Content-Security-Policy connect-src first.</span><span class="error" id="st-ep-e"></span></div>
+      <div class="btn-row" style="margin-top:10px"><button class="btn btn-primary btn-sm" type="submit" data-i18n="c.save"></button><button class="btn btn-ghost btn-sm" type="button" id="st-test">Test connection</button><button class="btn btn-ghost btn-sm" type="button" id="st-clear-ep">Disconnect</button></div>
+      <p class="small" id="st-iot-msg" aria-live="polite" style="margin-top:8px"></p>
+    </form></article>
+  <article class="card"><header><h3><i data-icon="database"></i>Data stored in this browser</h3></header>
+    <ul class="small"><li>Farm profile and settings: localStorage, on this device only.</li><li>Digital Twin scenarios and guided demo step: sessionStorage, cleared when the tab closes.</li><li>Nothing is sent to a FARMVERSE server.</li></ul>
+    <button class="btn btn-ghost btn-sm" type="button" id="st-wipe"><i data-icon="trash-2"></i>Delete my farm profile and settings</button>
+    <p class="small" id="st-wipe-msg" aria-live="polite"></p></article>
+</div>

@@ -1,0 +1,95 @@
+<!-- title: Command Center &middot; FARMVERSE AI | desc: Farm and district overview for Kalaburagi from NASA POWER, MODIS and SMAP observations. | page: dashboard | layout: app | icon: layout-dashboard | css: assets/vendor/leaflet/leaflet.css | scripts: assets/vendor/leaflet/leaflet.js,assets/vendor/chart.umd.min.js,assets/js/rotations-data.js,assets/js/climate.js,assets/js/series.js,assets/js/mapkit.js,assets/js/dashboard.js -->
+<section class="band">
+  <div class="band-grid">
+    <div>
+      <p class="eyebrow" id="d-season"></p>
+      <h1 id="d-farm-name">&nbsp;</h1>
+      <p id="d-farm-meta"></p>
+    </div>
+    <div class="btn-row" style="justify-content:flex-end">
+      <a class="btn btn-lime" href="twin.html"><i data-icon="box"></i><span data-i18n="dash.twin"></span></a>
+      <a class="btn btn-dark-ghost" href="advisor.html"><i data-icon="bot"></i><span data-i18n="dash.ask"></span></a>
+      <a class="btn btn-dark-ghost" href="farm.html"><i data-icon="pencil"></i><span data-i18n="c.edit"></span></a>
+    </div>
+  </div>
+  <p class="small" id="d-demo-note" hidden><span class="tag demo" data-i18n="tag.demo"></span> <span data-i18n="dash.demoFarm"></span></p>
+</section>
+
+<div class="notice err" id="d-error" hidden><i data-icon="circle-alert"></i><p id="d-error-text"></p></div>
+
+<div class="grid g4">
+  <article class="card kpi" style="--accent-c:var(--rain)">
+    <div class="label"><i data-icon="cloud-rain"></i><span data-i18n="dash.rain"></span> <span class="tag obs" data-i18n="tag.obs"></span></div>
+    <div class="value" id="k-rain">&nbsp;</div>
+    <div class="meter" aria-hidden="true"><i id="k-rain-bar" style="width:0"></i><span class="mark" style="left:50%"></span></div>
+    <div class="delta" id="k-rain-d"></div>
+    <div class="small faint expert-only" id="k-rain-x"></div>
+  </article>
+  <article class="card kpi" style="--accent-c:var(--heat)">
+    <div class="label"><i data-icon="thermometer-sun"></i><span data-i18n="dash.tmax"></span> <span class="tag obs" data-i18n="tag.obs"></span></div>
+    <div class="value" id="k-temp">&nbsp;</div>
+    <div class="chart short" style="height:60px"><canvas id="c-spark-temp" aria-label="Maximum temperature over the last 30 days"></canvas></div>
+    <div class="delta" id="k-temp-d"></div>
+  </article>
+  <article class="card kpi" style="--accent-c:var(--soil)">
+    <div class="label"><i data-icon="droplets"></i><span data-i18n="dash.soil"></span> <span class="tag obs">SMAP L4</span></div>
+    <div class="value" id="k-soil">&nbsp;</div>
+    <div class="meter" aria-hidden="true"><i id="k-soil-bar" style="width:0"></i><span class="mark" id="k-soil-mark" style="left:50%"></span></div>
+    <div class="delta" id="k-soil-d"></div>
+    <div class="small faint expert-only" id="k-soil-x"></div>
+  </article>
+  <article class="card kpi" style="--accent-c:var(--veg)">
+    <div class="label"><i data-icon="leaf"></i><span data-i18n="dash.veg"></span> <span class="tag obs">MODIS</span></div>
+    <div class="value" id="k-veg">&nbsp;</div>
+    <div class="meter" aria-hidden="true"><i id="k-veg-bar" style="width:0"></i><span class="mark" id="k-veg-mark" style="left:50%"></span></div>
+    <div class="delta" id="k-veg-d"></div>
+    <div class="small faint expert-only" id="k-veg-x"></div>
+  </article>
+</div>
+
+<div class="grid g2" style="margin-top:16px">
+  <article class="card flush" style="min-height:380px;display:flex;flex-direction:column">
+    <header style="padding:14px 16px 0"><h2><i data-icon="map"></i><span data-i18n="dash.map"></span></h2>
+      <div class="seg" role="group" aria-label="Map layer"><button type="button" data-layer="imagery" aria-pressed="true">Imagery</button><button type="button" data-layer="ndvi" aria-pressed="false">NDVI</button></div>
+    </header>
+    <div class="map-fill"><div id="d-map" class="map"></div></div>
+    <p class="small muted" id="d-map-note" style="padding:0 16px 14px;margin:0"></p>
+  </article>
+  <article class="card">
+    <header><h2><i data-icon="bell"></i><span data-i18n="dash.alerts"></span></h2><a class="small" href="climate.html" data-i18n="nav.climate"></a></header>
+    <ul class="alerts" id="d-alerts"><li class="faint" data-i18n="c.loading"></li></ul>
+    <p class="small faint" style="margin-top:12px">Alerts are generated from the observations above using fixed rules (rain within 90 to 110% of normal counts as normal; vegetation and soil moisture within the 10th to 90th percentile of the same date in earlier years count as usual). They describe conditions; they are not instructions.</p>
+  </article>
+</div>
+
+<div class="grid g2" style="margin-top:16px">
+  <article class="card">
+    <header><h2><i data-icon="cloud-rain"></i><span data-i18n="dash.monthly"></span></h2><span class="tag obs">NASA POWER</span></header>
+    <div class="legend-row"><span><i style="background:var(--rain)"></i><span id="lg-year">This year</span></span><span><i style="background:#D6E3EC"></i>1991 to 2020: 10th to 90th percentile</span><span><i class="line" style="background:#142019"></i>1991 to 2020 average</span></div>
+    <div class="chart"><canvas id="c-monthly" role="img" aria-label="Monthly rainfall this year compared with 1991 to 2020"></canvas></div>
+    <div class="chart-src" id="src-monthly"></div>
+  </article>
+  <article class="card">
+    <header><h2><i data-icon="leaf"></i>Vegetation this year compared with 2001 to 2025</h2><span class="tag obs">MODIS NDVI</span></header>
+    <div class="legend-row"><span><i class="line" style="background:var(--veg)"></i>District mean, this year</span><span><i style="background:#DCEBD8"></i>2001 to 2025: 10th to 90th percentile</span><span><i class="line" style="background:var(--earth)"></i>Demonstration field pixel</span></div>
+    <div class="chart"><canvas id="c-veg" role="img" aria-label="NDVI seasonal profile"></canvas></div>
+    <div class="chart-src">MODIS Terra 16-day NDVI decoded from NASA GIBS. Field value is one roughly 300 m pixel.</div>
+  </article>
+</div>
+
+<div class="grid g3" style="margin-top:16px">
+  <article class="card">
+    <header><h2><i data-icon="repeat"></i><span data-i18n="dash.rot"></span></h2><span id="d-rot-tag"></span></header>
+    <div id="d-rot"></div>
+    <div class="btn-row" style="margin-top:12px"><a class="btn btn-ghost btn-sm" href="rotation.html" data-i18n="nav.rotation"></a><a class="btn btn-primary btn-sm" href="twin.html" data-i18n="dash.twin"></a></div>
+  </article>
+  <article class="card">
+    <header><h2><i data-icon="radio"></i><span data-i18n="dash.iot"></span></h2></header>
+    <div id="d-iot"></div>
+    <a class="btn btn-ghost btn-sm" href="iot.html" style="margin-top:10px" data-i18n="nav.iot"></a>
+  </article>
+  <article class="card">
+    <header><h2><i data-icon="clock"></i><span data-i18n="dash.updates"></span></h2></header>
+    <div class="table-wrap"><table><tbody id="d-updates"></tbody></table></div>
+  </article>
+</div>

@@ -1,0 +1,53 @@
+<!-- title: Crop Rotation &middot; FARMVERSE AI | desc: Compare a farm's current crop rotation with alternatives from the ICAR-CRIDA plan for Kalaburagi, and plan a two-year crop sequence. | page: rotation | layout: app | icon: repeat | scripts: assets/js/rotations-data.js,assets/js/rotation-rules.js,assets/js/climate.js,assets/js/rotation.js -->
+<section class="band"><div class="band-grid"><div><p class="eyebrow">ICAR-CRIDA district plan &middot; NASA POWER</p><h1 data-i18n="title.rotation"></h1><p data-i18n="sub.rotation"></p></div><div class="band-stats" id="ro-stats"></div></div></section>
+
+<div class="tabs" role="tablist">
+  <button role="tab" aria-selected="true" data-tab="compare"><i data-icon="git-compare"></i>Compare rotations</button>
+  <button role="tab" aria-selected="false" data-tab="plan"><i data-icon="calendar"></i>Plan a sequence</button>
+  <button role="tab" aria-selected="false" data-tab="short"><i data-icon="list-checks"></i>Shortlist for my soil</button>
+</div>
+
+<section data-pane="compare">
+  <form class="card" id="ro-form" novalidate>
+    <div class="form-grid">
+      <div class="field"><label for="ro-soil"><span data-i18n="farm.soilSit"></span> <span class="tag farmer" data-i18n="tag.farmer"></span></label><select id="ro-soil"></select></div>
+      <div class="field"><label for="ro-a">Current rotation</label><select id="ro-a"></select></div>
+      <div class="field"><label for="ro-b">Alternative 1</label><select id="ro-b"></select></div>
+      <div class="field"><label for="ro-c">Alternative 2</label><select id="ro-c"></select></div>
+    </div>
+    <fieldset style="margin-top:12px"><legend class="small" style="font-weight:600">Farmer priorities (optional)</legend>
+      <div class="btn-row"><label class="check"><input type="checkbox" id="ro-p-leg"> Include a legume</label><label class="check"><input type="checkbox" id="ro-p-two"> Use both kharif and rabi seasons</label><label class="check"><input type="checkbox" id="ro-p-one"> Keep to one cropping season</label></div>
+    </fieldset>
+    <p class="small" id="ro-dup" hidden style="color:var(--warn-ink)">The same rotation is selected more than once.</p>
+  </form>
+  <div class="grid g3" id="ro-cards" style="margin-top:16px"></div>
+</section>
+
+<section data-pane="plan" hidden>
+  <article class="card">
+    <header><h3>Two-year crop sequence</h3><span class="tag farmer" data-i18n="tag.farmer"></span></header>
+    <p class="small muted">Pick a crop for each season. The checks below use only facts from the district plan and the crop list; they do not rank sequences.</p>
+    <div class="form-grid" id="pl-grid"></div>
+    <div class="grid g2" style="margin-top:16px">
+      <div><h4>Checks</h4><ul class="check-list" id="pl-checks"></ul></div>
+      <div><h4>Sequence timeline</h4><div id="pl-strip"></div></div>
+    </div>
+    <div class="btn-row" style="margin-top:12px"><a class="btn btn-primary btn-sm" href="twin.html"><i data-icon="box"></i>Explore scenarios in the Digital Twin</a></div>
+  </article>
+</section>
+
+<section data-pane="short" hidden>
+  <article class="card"><div id="ro-short"></div></article>
+</section>
+
+<div class="grid g2" style="margin-top:16px">
+  <article class="card"><header><h3><i data-icon="scale"></i>The rules, in full</h3></header>
+    <ul class="small">
+      <li><strong>Listed for this soil:</strong> the ICAR-CRIDA Gulbarga plan names the system as a normal system for the selected soil situation.</li>
+      <li><strong>Legume:</strong> any crop in the sequence is a legume (pigeonpea, green gram, black gram, soybean, chickpea). Green manure depends on species.</li>
+      <li><strong>Climate evidence:</strong> NASA POWER means for 1991 to 2010 against 2011 onward at the pilot point.</li>
+      <li><strong>No shortlist without a soil situation.</strong> Rotations are never scored or ranked.</li>
+    </ul></article>
+  <article class="card"><header><h3><i data-icon="triangle-alert"></i>Before acting on this</h3></header>
+    <ul class="small"><li>The catalogue is the 10 rainfed systems of one district plan published in 2011.</li><li>District yields are historical averages, not farm forecasts.</li><li>Profit, prices, inputs and nitrogen quantities are not estimated.</li><li>Discuss any change with the Krishi Vigyan Kendra or an agricultural officer.</li></ul></article>
+</div>
